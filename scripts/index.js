@@ -10,20 +10,20 @@ function createCard(cardContent) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
     const cardTitle = cardElement.querySelector('.card__title');
     const cardImage = cardElement.querySelector('.card__image');
+    const cardDeleteBtn = cardElement.querySelector('.card__delete-button');
 
     cardTitle.textContent = cardContent.name;
     cardImage.src = cardContent.link;
     cardImage.alt = cardContent.name;
 
-
-// @todo: Функция удаления карточки
-
-    const cardDeleteBtn = cardElement.querySelector('.card__delete-button');
-    cardDeleteBtn.addEventListener('click', function() {
-        cardElement.remove();
-});
+    cardDeleteBtn.addEventListener('click', () => handDelete(cardElement));
 
     return cardElement;
+}
+
+// @todo: Функция удаления карточки
+function handDelete(cardElement) {
+    cardElement.remove();
 }
 
 
