@@ -12,7 +12,7 @@ module.exports = {
   },
     mode: 'development',
   devServer: {
-    static: path.resolve(__dirname, './dist'),
+    static: path.resolve(__dirname, 'dist'),
     compress: true,
     port: 8080,
     open: true
@@ -44,6 +44,8 @@ module.exports = {
         template: 'src/index.html'
       }),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin()
-  ]
+    new MiniCssExtractPlugin({
+      filename: 'index.css',
+    }),
+  ],
 };
