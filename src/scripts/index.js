@@ -11,8 +11,8 @@ logoImg.src = logo;
 const profileImage = document.querySelector('.profile__image');
 profileImage.style.backgroundImage = `url(${avatarImage})`;
 
-console.log(avatarImage);
-
+// @todo: DOM узлы
+const cardsList = document.querySelector('.places__list');
 const editButton = document.querySelector('.profile__edit-button');
 const closeButtons = document.querySelectorAll('.popup__close');
 const popupEdit = document.querySelector('.popup_type_edit');
@@ -35,9 +35,6 @@ editButton.addEventListener('click', () => {
 
 newCardButton.addEventListener('click', () => openPopup(popupNewCard));
 
-// @todo: DOM узлы
-const cardsList = document.querySelector('.places__list');
-
 
 // открытие попапа с картинкой
 
@@ -58,7 +55,7 @@ function openImage(name, link) {
 function addCards(initialCards) {
     initialCards.forEach(card => {
         const cardElement = createCard(card, openImage);
-
+        
         cardsList.append(cardElement);
     });
 }
@@ -115,8 +112,7 @@ function createNewCard(evt) {
     const titleValue = newCardTitle.value;
     const urlValue = newCardLink.value;
 
-    const newCard = createCard({ name: titleValue, link: urlValue }, cardLike);
-    const formNewCard = popupNewCard.querySelector('.popup__form');
+    const newCard = createCard({ name: titleValue, link: urlValue });
 
     cardsList.prepend(newCard);
 
