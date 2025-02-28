@@ -1,7 +1,7 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
-import { createCard } from './cards.js';
-import { openPopup, closeModal } from './modal.js';
+import { createCard } from './card.js';
+import { openPopup, closeModal, closeModalOverlay } from './modal.js';
 import avatarImage from '../images/avatar.jpg';
 import logo from '../images/logo.svg';
 
@@ -13,6 +13,9 @@ profileImage.style.backgroundImage = `url(${avatarImage})`;
 
 // @todo: DOM узлы
 const cardsList = document.querySelector('.places__list');
+const popupImage = document.querySelector('.popup_type_image');
+const openedImage = popupImage.querySelector('.popup__image');
+const cardTitlePopup = popupImage.querySelector('.popup__caption');
 const editButton = document.querySelector('.profile__edit-button');
 const closeButtons = document.querySelectorAll('.popup__close');
 const popupEdit = document.querySelector('.popup_type_edit');
@@ -39,10 +42,6 @@ newCardButton.addEventListener('click', () => openPopup(popupNewCard));
 // открытие попапа с картинкой
 
 function openImage(name, link) {
-    const popupImage = document.querySelector('.popup_type_image');
-    const openedImage = popupImage.querySelector('.popup__image');
-    const cardTitlePopup = popupImage.querySelector('.popup__caption');
-
     cardTitlePopup.textContent = name;
     openedImage.src = link;
     openedImage.alt = name;
@@ -61,28 +60,6 @@ function addCards(initialCards) {
 }
 
 addCards(initialCards);
-
-// функция закрытия по esc
-
-function closeModalEsc(event) {
-    if(event.key === "Escape") {
-        const openedModal = document.querySelector('.popup_is-opened');
-
-        if (openedModal) {
-        closeModal(openedModal);
-    }
-    }
-}
-
-document.addEventListener('keydown', closeModalEsc);
-
-//функция закрытия кликом по оверлею
-
-function closeModalOverlay(event) {
-    if (event.target.matches('.popup')) {
-        closeModal(event.target);
-    }
-}
 
 popups.forEach(popup => {
     popup.addEventListener('click', closeModalOverlay);
@@ -112,7 +89,7 @@ function createNewCard(evt) {
     const titleValue = newCardTitle.value;
     const urlValue = newCardLink.value;
 
-    const newCard = createCard({ name: titleValue, link: urlValue });
+    const newCard = createCard({ name: titleValue, link: urlValue, openImage });
 
     cardsList.prepend(newCard);
 
