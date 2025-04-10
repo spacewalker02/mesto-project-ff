@@ -17,3 +17,14 @@
     padding: 30px 20px;
   }
 }
+
+.popup__content_type_new-avatar {
+  min-height: fit-content;
+  max-width: 430px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  position: relative;
+  box-sizing: border-box;
+  padding: 34px 36px;
+}
