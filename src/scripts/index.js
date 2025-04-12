@@ -5,7 +5,7 @@ import { openPopup, closeModal, closeModalOverlay } from './modal.js';
 import avatarImage from '../images/avatar.jpg';
 import logo from '../images/logo.svg';
 import { enableValidation, clearValidation, toggleButtonState } from '../scripts/validation.js';
-import { getUserInfo, getInitialCards, updateUserInfo, addNewCard, updateAvatar, deleteCard, putLike, removeLike } from '../scripts/api.js';
+import { getUserInfo, getInitialCards, updateUserInfo, addNewCard, updateAvatar, deleteCard } from '../scripts/api.js';
 
 const config = {
     formSelector: '.popup__form', 
@@ -29,7 +29,7 @@ Promise.all([getUserInfo(), getInitialCards()])
         profileImage.style.backgroundImage = `url(${userData.avatar})`;
 
         cards.reverse().forEach((card) => {
-            const cardElement = createCard(card, openImage, handleDeleteCard, handleLikeClick, userId);
+            const cardElement = createCard(card, openImage, handleDeleteCard, userId);
             cardsList.prepend(cardElement);
         });
     })
@@ -184,7 +184,7 @@ function createNewCard(evt) {
 
     addNewCard(titleValue, urlValue)
         .then((newCardData) => {
-            const cardElement = createCard(newCardData, openImage, handleDeleteCard, handleLikeClick, userId);
+            const cardElement = createCard(newCardData, openImage, handleDeleteCard, userId);
             cardsList.prepend(cardElement);
             formNewCard.reset();
             closeModal(popupNewCard);
@@ -202,21 +202,6 @@ formNewCard.addEventListener('submit', createNewCard);
 closeButtons.forEach(button => {
     button.addEventListener('click', closeModal);
 });
-
-function handleLikeClick(cardId, likeButton, counterElement) {
-    const isLiked = likeButton.classList.contains('card__like-button_is-active');
-  
-    const likeAction = isLiked ? removeLike : putLike;
-  
-    likeAction(cardId)
-      .then((updatedCard) => {
-        counterElement.textContent = updatedCard.likes.length;
-        likeButton.classList.toggle('card__like-button_is-active');
-      })
-      .catch((err) => {
-        console.log('Ошибка при изменении лайка:', err);
-      });
-  }
 
   function handleDeleteCard(cardId, cardElement) {
     deleteCard(cardId)
