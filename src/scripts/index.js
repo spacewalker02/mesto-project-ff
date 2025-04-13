@@ -1,6 +1,6 @@
 import '../pages/index.css';
 import '../scripts/validation.js';
-import { createCard } from './card.js';
+import { createCard, handleLikeClick } from './card.js';
 import { openPopup, closeModal, closeModalOverlay } from './modal.js';
 import avatarImage from '../images/avatar.jpg';
 import logo from '../images/logo.svg';
@@ -29,7 +29,7 @@ Promise.all([getUserInfo(), getInitialCards()])
         profileImage.style.backgroundImage = `url(${userData.avatar})`;
 
         cards.reverse().forEach((card) => {
-            const cardElement = createCard(card, openImage, handleDeleteCard, userId);
+            const cardElement = createCard(card, openImage, handleDeleteCard, handleLikeClick, userId);
             cardsList.prepend(cardElement);
         });
     })
@@ -184,7 +184,7 @@ function createNewCard(evt) {
 
     addNewCard(titleValue, urlValue)
         .then((newCardData) => {
-            const cardElement = createCard(newCardData, openImage, handleDeleteCard, userId);
+            const cardElement = createCard(newCardData, openImage, handleDeleteCard, handleLikeClick, userId);
             cardsList.prepend(cardElement);
             formNewCard.reset();
             closeModal(popupNewCard);

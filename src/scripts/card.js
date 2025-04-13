@@ -2,7 +2,7 @@ import { putLike, removeLike } from "./api";
 
 // @todo: Функция создания карточки
 
-function handleLikeClick(cardId, likeButton, counterElement) {
+export function handleLikeClick(cardId, likeButton, counterElement) {
   const isLiked = likeButton.classList.contains('card__like-button_is-active');
   const likeAction = isLiked ? removeLike : putLike;
 
@@ -16,7 +16,7 @@ function handleLikeClick(cardId, likeButton, counterElement) {
     });
 }
 
-export function createCard(cardData, openImage, handleDeleteClick, userId) {
+export function createCard(cardData, openImage, handleDeleteClick, handleLikeClick, userId) {
   const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
